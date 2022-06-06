@@ -1,0 +1,27 @@
+version: "0.0.1"
+
+services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      # - config: /root/configs
+      - "$PWD:/python_study"
+    ports:
+      # - "8080:80"
+      - "8001:8001"
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=8001
+    # command: nginx -c /python_study/nginx.conf
+
+
+  # jupyter:
+  #   image: jupyter/base-notebook:latest
+  #   ports:
+  #     - "8888:8888"
+  #     - "8889:8889"
+  #     - "8890:8890"
+  #   volumes:
+  #     - "$PWD:/python_study"
+  #   working_dir: "/python_study"
+  #   # command: /bin/bash
