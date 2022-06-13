@@ -1,0 +1,25 @@
+services:
+  jupyter:
+    image: jupyter/base-notebook:latest
+    container_name: jupyter
+    user: root
+    working_dir: /notebooks
+    ports:
+      - "38888:38888"
+    volumes:
+      - "$PWD/notebooks:/notebooks"
+      - "$PWD/jupyter_config.py:/home/jovyan/.jupyter/jupyter_config.py"
+    depends_on:
+      - nginx
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - $PWD/nginx.conf:/etc/nginx/conf.d/flags.conf:ro
+      - $PWD/downloads:/flags:ro
+    expose:
+      - "8001"
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=8001
