@@ -11,6 +11,8 @@ services:
       - "$PWD/jupyter_config.py:/home/jovyan/.jupyter/jupyter_config.py"
     depends_on:
       - nginx
+      - vaurien_delay
+      - vaurien_error_delay
 
   nginx:
     image: nginx:latest
@@ -23,3 +25,29 @@ services:
     environment:
       - NGINX_HOST=localhost
       - NGINX_PORT=8001
+
+  vaurien_delay:
+    image: clintsharp/vaurien:latest
+    container_name: vaurien_delay
+    volumes:
+      - $PWD/vaurien_delay.sh:/root/vaurien_delay.sh
+    expose:
+      - "8002"
+    entrypoint:
+      - /bin/bash
+      - /root/vaurien_delay.sh
+    depends_on:
+      - nginx
+
+  vaurien_error_delay:
+    image: clintsharp/vaurien:latest
+    container_name: vaurien_error_delay
+    volumes:
+      - $PWD/vaurien_error_delay.sh:/root/vaurien_error_delay.sh
+    expose:
+      - "8003"
+    entrypoint:
+      - /bin/bash
+      - /root/vaurien_error_delay.sh
+    depends_on:
+      - nginx
