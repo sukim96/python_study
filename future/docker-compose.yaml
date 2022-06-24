@@ -9,6 +9,10 @@ services:
     volumes:
       - "$PWD/notebooks:/notebooks"
       - "$PWD/jupyter_config.py:/home/jovyan/.jupyter/jupyter_config.py"
+    entrypoint:
+      - jupyter
+      - lab
+      - --allow-root
     depends_on:
       - nginx
       - vaurien_delay
